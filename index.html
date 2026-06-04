@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>鹅鸭杀 (Goose Goose Duck) 全角色图鉴</title>
+<style>
+  :root {
+    --goose: #4a90d9;
+    --goose-light: #e8f0fe;
+    --goose-border: #2d6cb4;
+    --duck: #d94a4a;
+    --duck-light: #fde8e8;
+    --duck-border: #b42d2d;
+    --neutral: #9b59b6;
+    --neutral-light: #f3e8f9;
+    --neutral-border: #7d3c98;
+    --bg: #1a1a2e;
+    --card-bg: #16213e;
+    --text: #e0e0e0;
+    --text-secondary: #a0a0b0;
+    --gold: #f0c040;
+  }
+
+  * { margin:0; padding:0; box-sizing:border-box; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: -apple-system, "Microsoft YaHei", "PingFang SC", sans-serif;
+    line-height: 1.6;
+    min-height: 100vh;
+  }
+
+  /* Header */
+  .hero {
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+    text-align: center;
+    padding: 60px 20px 50px;
+    position: relative;
+    overflow: hidden;
+  }
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle at 30% 50%, rgba(240,192,64,0.08) 0%, transparent 50%),
+                radial-gradient(circle at 70% 50%, rgba(74,144,217,0.08) 0%, transparent 50%);
+    animation: heroGlow 8s ease-in-out infinite;
+  }
+  @keyframes heroGlow {
+    0%, 100% { transform: translate(0,0); }
+    50% { transform: translate(2%, -1%); }
+  }
+  .hero h1 {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 900;
+    background: linear-gradient(135deg, #f0c040, #e8a020, #f0c040);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .subtitle {
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+    margin-top: 12px;
+    position: relative;
+    z-index: 1;
+  }
+  .hero .badge-row {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 24px;
+    position: relative;
+    z-index: 1;
+  }
+  .badge {
+    padding: 6px 18px;
+    border-radius: 20px;
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .badge-goose { background: rgba(74,144,217,0.2); color: #6db3f2; border: 1px solid rgba(74,144,217,0.3); }
+  .badge-duck  { background: rgba(217,74,74,0.2);  color: #f26d6d; border: 1px solid rgba(217,74,74,0.3); }
+  .badge-neutral { background: rgba(155,89,182,0.2); color: #c08ddb; border: 1px solid rgba(155,89,182,0.3); }
+
+  /* Navigation */
+  .nav-bar {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(22,33,62,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    padding: 10px 16px;
+    flex-wrap: wrap;
+  }
+  .nav-bar a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    padding: 6px 16px;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all .2s;
+  }
+  .nav-bar a:hover, .nav-bar a.active {
+    color: #fff;
+    background: rgba(255,255,255,0.08);
+  }
+
+  /* Section Title */
+  .section-title {
+    text-align: center;
+    padding: 50px 20px 30px;
+  }
+  .section-title h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 6px;
+  }
+  .section-title .count {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+  }
+  .section-goose h2 { color: #6db3f2; }
+  .section-duck  h2 { color: #f26d6d; }
+  .section-neutral h2 { color: #c08ddb; }
+
+  /* Card Grid */
+  .card-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 20px;
+    padding: 0 24px 40px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* Card */
+  .card {
+    background: var(--card-bg);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: transform .2s, box-shadow .2s;
+    border: 1px solid rgba(255,255,255,0.06);
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 40px rgba(0,0,0,0.3);
+  }
+  .card.goose  { border-top: 3px solid var(--goose); }
+  .card.duck   { border-top: 3px solid var(--duck); }
+  .card.neutral { border-top: 3px solid var(--neutral); }
+
+  /* Card Image Area */
+  .card-img {
+    height: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .card.goose  .card-img { background: linear-gradient(180deg, rgba(74,144,217,0.15), rgba(74,144,217,0.03)); }
+  .card.duck   .card-img { background: linear-gradient(180deg, rgba(217,74,74,0.15), rgba(217,74,74,0.03)); }
+  .card.neutral .card-img { background: linear-gradient(180deg, rgba(155,89,182,0.15), rgba(155,89,182,0.03)); }
+
+  .card-img svg {
+    width: 140px;
+    height: 160px;
+    filter: drop-shadow(0 4px 12px rgba(0,0,0,0.3));
+    transition: transform .3s;
+  }
+  .card:hover .card-img svg {
+    transform: scale(1.08);
+  }
+
+  /* Faction tag */
+  .faction-tag {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    padding: 3px 10px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .card.goose  .faction-tag { background: var(--goose); color: #fff; }
+  .card.duck   .faction-tag { background: var(--duck);  color: #fff; }
+  .card.neutral .faction-tag { background: var(--neutral); color: #fff; }
+
+  /* Card Body */
+  .card-body {
+    padding: 16px 20px 24px;
+  }
+  .card-body h3 {
+    font-size: 1.15rem;
+    font-weight: 700;
+    margin-bottom: 4px;
+  }
+  .card.goose  .card-body h3 { color: #6db3f2; }
+  .card.duck   .card-body h3 { color: #f26d6d; }
+  .card.neutral .card-body h3 { color: #c08ddb; }
+
+  .card-body .en-name {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+    margin-bottom: 14px;
+    font-style: italic;
+  }
+
+  .info-block {
+    margin-bottom: 10px;
+  }
+  .info-block .label {
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    color: var(--text-secondary);
+    margin-bottom: 4px;
+    font-weight: 600;
+  }
+  .info-block .content {
+    font-size: 0.92rem;
+    color: var(--text);
+    line-height: 1.55;
+  }
+
+  .skill-tag {
+    display: inline-block;
+    padding: 3px 10px;
+    border-radius: 6px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    margin: 2px 4px 2px 0;
+  }
+  .skill-active  { background: rgba(240,192,64,0.15); color: #f0c040; }
+  .skill-passive { background: rgba(99,179,134,0.15); color: #63b386; }
+  .skill-danger  { background: rgba(217,74,74,0.15);  color: #f26d6d; }
+
+  /* Footer */
+  .footer {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    border-top: 1px solid rgba(255,255,255,0.06);
+  }
+  .footer a { color: #6db3f2; text-decoration: none; }
+
+  /* Back to top */
+  .back-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    color: #fff;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all .2s;
+    z-index: 200;
+    text-decoration: none;
+  }
+  .back-top:hover { background: rgba(255,255,255,0.2); }
+
+  /* Win condition highlight */
+  .win-condition {
+    background: rgba(240,192,64,0.08);
+    border-left: 3px solid var(--gold);
+    padding: 8px 12px;
+    border-radius: 0 6px 6px 0;
+    margin-top: 10px;
+    font-size: 0.88rem;
+  }
+  .win-condition .label {
+    color: var(--gold);
+    font-weight: 700;
+    font-size: 0.72rem;
+    letter-spacing: 1px;
+  }
+
+  @media (max-width: 640px) {
+    .card-grid { grid-template-columns: 1fr; padding: 0 12px 30px; }
+    .hero { padding: 40px 16px 30px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ====== HERO ====== -->
+<header class="hero">
+  <h1>鹅鸭杀 全角色图鉴</h1>
+  <p class="subtitle">Goose Goose Duck · 全阵营角色介绍与技能详解</p>
+  <div class="badge-row">
+    <span class="badge badge-goose">鹅阵营 · 好人</span>
+    <span class="badge badge-duck">鸭阵营 · 坏人</span>
+    <span class="badge badge-neutral">中立阵营 · 独立</span>
+  </div>
+</header>
+
+<!-- ====== NAV ====== -->
+<nav class="nav-bar" id="nav">
+  <a href="#goose">鹅阵营</a>
+  <a href="#duck">鸭阵营</a>
+  <a href="#neutral">中立阵营</a>
+</nav>
+
+<!-- ==================== GOOSE ==================== -->
+<div class="section-title section-goose" id="goose">
+  <h2>鹅阵营 GOOSE</h2>
+  <p class="count">好人阵营 · 完成任务或投票淘汰所有鸭子即可获胜 · 共 18 个角色</p>
+</div>
+
+<div class="card-grid">
+
+  <!-- 大白鹅 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g1" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g1)" stroke="#ddd" stroke-width="1"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff" stroke="#eee" stroke-width="1"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><circle cx="57" cy="60" r="1.5" fill="#fff"/><circle cx="85" cy="60" r="1.5" fill="#fff"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none" stroke-linecap="round"/><polygon points="70,48 60,30 72,40" fill="#fa0"/><polygon points="80,48 90,30 78,40" fill="#fa0"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>大白鹅</h3>
+      <div class="en-name">The Goose</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">鹅阵营的基础角色，没有特殊技能，纯靠做任务和逻辑推理找出鸭子。每一位大白鹅都是团队中最朴实的打工人，也是最考验玩家发言和推理能力的角色。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">无主动技能</span> 依靠完成任务推进进度条，通过会议讨论和投票找出潜伏的鸭子。生存和观察是大白鹅最强的武器。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 警长 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g2" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g2)" stroke="#d4a843" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><rect x="55" y="28" width="30" height="18" rx="4" fill="#4a3728"/><rect x="50" y="22" width="40" height="10" rx="3" fill="#5c4033"/><ellipse cx="70" cy="18" rx="14" ry="5" fill="#6b4c3b"/><polygon points="70,16 70,6 78,12" fill="#f0c040"/><polygon points="70,145" ry="8"/><ellipse cx="40" cy="130" rx="6" ry="18" fill="#fff" stroke="#ddd" stroke-width="1"/><line x1="36" y1="130" x2="22" y2="120" stroke="#c4a44a" stroke-width="3" stroke-linecap="round"/><line x1="44" y1="130" x2="58" y2="120" stroke="#c4a44a" stroke-width="3" stroke-linecap="round"/><text x="70" y="114" text-anchor="middle" font-size="14" fill="#c4a44a" font-weight="bold">★</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>警长</h3>
+      <div class="en-name">Sheriff</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">鹅阵营的核心武力担当，拥有无限次击杀能力。但权力越大责任越大——一旦误杀好人，警长将与受害者双双殉职，是游戏中最具戏剧性的角色之一。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">无限击杀</span> <span class="skill-tag skill-danger">误杀双倒</span> 可以击杀任何玩家，但如果杀掉的是鹅队友，自己也会当场毙命。经典名场面：警长刀了加拿大鹅→双倒→自动报警→全场懵逼。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 正义使者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g3" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e8f0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g3)" stroke="#4a90d9" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,46 56,32 65,36" fill="#4a90d9"/><polygon points="70,46 84,32 75,36" fill="#4a90d9"/><circle cx="70" cy="42" r="8" fill="none" stroke="#f0c040" stroke-width="2"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><path d="M95 125 L115 105" stroke="#f0c040" stroke-width="3" stroke-linecap="round"/><path d="M100 130 L118 118" stroke="#f0c040" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>正义使者</h3>
+      <div class="en-name">Vigilante</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">与警长不同，正义使者更加谨慎。整局游戏只有一次无惩罚击杀机会，必须在确认目标身份后再动手。一击必杀的快感，但用错就再无机会。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">正义裁决（单次）</span> 全局仅可使用一次击杀，击杀鸭子无惩罚。用完后变为普通大白鹅。适合在有确凿证据时使用。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 加拿大鹅 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g4" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g4)" stroke="#c44" stroke-width="2"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="50" rx="14" ry="6" fill="#c44"/><ellipse cx="70" cy="47" rx="10" ry="4" fill="#d55"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><text x="48" y="105" font-size="11" fill="#c44" font-weight="bold">🍁</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>加拿大鹅</h3>
+      <div class="en-name">Canadian Goose</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">加拿大鹅是被动报警的终极武器。一旦被鸭子杀死，尸体将在1秒后自动触发报警进入会议。稳赚不赔的一换一，但专业杀手可以克制它。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">自动报警（被动）</span> 被击杀或被鹈鹕吞下后自动触发会议。鸭子的噩梦，让刺客无法藏尸。但专业杀手的刀不触发此被动。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 侦探 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g5" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g5)" stroke="#8b7355" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><rect x="58" y="28" width="24" height="16" rx="3" fill="#4a3728"/><rect x="63" y="18" width="14" height="14" rx="2" fill="#5c4033"/><circle cx="70" cy="55" r="14" fill="none" stroke="#444" stroke-width="1.5"/><line x1="70" y1="41" x2="70" y2="69" stroke="#444" stroke-width="1"/><line x1="56" y1="55" x2="84" y2="55" stroke="#444" stroke-width="1"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>侦探</h3>
+      <div class="en-name">Detective</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">戴着侦探帽的鹅，拥有调查玩家是否在本回合实施过杀戮的能力。信息型角色的核心，也是鸭子最想优先除掉的目标之一。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">调查（每回合1次）</span> 每回合可调查一名玩家，查看其在本回合是否有过击杀行为。每人限查一次，信息可靠。适合在发现尸体后排查嫌疑人。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 通灵者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g6" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e0f0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g6)" stroke="#9b59b6" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#6b3fa0"/><circle cx="84" cy="62" r="5" fill="#6b3fa0"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><circle cx="70" cy="120" r="14" fill="none" stroke="#9b59b6" stroke-width="1.5" opacity="0.5"/><text x="70" y="124" text-anchor="middle" font-size="12" fill="#9b59b6">👻</text><polygon points="70,48 64,34 76,34" fill="#9b59b6"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>通灵者</h3>
+      <div class="en-name">Medium</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">能与亡灵沟通的神秘角色。通灵者可以随时查看场上幽灵的数量，间接掌握死亡人数，在会议中提供关键的情报支持。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">感知灵魂</span> 随时查看当前场上幽灵（死亡玩家）的数量。通过对比已知信息，可以推断是否有未被发现的尸体或隐藏击杀。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 观鸟者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g7" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g7)" stroke="#6b8e23" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><ellipse cx="56" cy="60" rx="8" ry="8" fill="#fff" stroke="#444" stroke-width="1.5"/><ellipse cx="84" cy="60" rx="8" ry="8" fill="#fff" stroke="#444" stroke-width="1.5"/><circle cx="56" cy="60" r="3.5" fill="#c44"/><circle cx="84" cy="60" r="3.5" fill="#c44"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="50" rx="20" ry="6" fill="#6b8e23"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>观鸟者</h3>
+      <div class="en-name">Birdwatcher</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">戴着望远镜的鹅，视野可以穿透墙壁。虽然常规视野受限，但穿墙能力让观鸟者成为蹲点侦察的专家——在关键位置蹲守，往往能抓个正着。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">穿墙视野（被动）</span> 视野呈扇形且可穿透墙壁，但常规视野范围缩小。适合在管道口、尸体附近蹲点，观察鸭子的行动轨迹。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 殡仪员 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g8" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e0e0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g8)" stroke="#666" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><rect x="55" y="28" width="30" height="18" rx="4" fill="#333"/><rect x="58" y="22" width="24" height="10" rx="2" fill="#444"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><rect x="62" y="100" width="16" height="20" rx="3" fill="#fff" stroke="#999" stroke-width="1"/><text x="70" y="114" text-anchor="middle" font-size="10" fill="#999">?</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>殡仪员</h3>
+      <div class="en-name">Mortician</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">法医型角色，靠近尸体可以查看死者的具体身份。在会议中提供准确的死者身份信息，是辨别真假信息的关键情报来源。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">查验尸体</span> 靠近并调查尸体后可以看到死者的具体角色。在会议中报告时，可以准确说出死者的角色身份，提供关键证据。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 模仿者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g9" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g9)" stroke="#d94a4a" stroke-width="1.5" stroke-dasharray="4,2"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#d44"/><circle cx="84" cy="62" r="5" fill="#d44"/><path d="M58 78 Q70 90 82 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><text x="70" y="115" text-anchor="middle" font-size="10" fill="#d44">❓</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>模仿者</h3>
+      <div class="en-name">Mimic Goose</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">最特殊的鹅阵营角色——在鸭子视角中，模仿者显示为红名（鸭队友）。这使模仿者可以混入鸭子队伍中获取情报，但鸭子也可以误杀模仿者。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">伪装红名（被动）</span> 在鸭子眼中显示为鸭子阵营的红色名字。可以借此混入鸭群获取情报，但也可能被鸭子误当队友而遭遇意外。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 网红 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g10" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ffe0f0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g10)" stroke="#f0a0c0" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="60" r="6" fill="#222"/><circle cx="84" cy="60" r="6" fill="#222"/><circle cx="57" cy="58" r="2" fill="#fff"/><circle cx="85" cy="58" r="2" fill="#fff"/><path d="M62 78 Q70 86 78 78" stroke="#f0a0c0" stroke-width="3" fill="none"/><ellipse cx="70" cy="46" rx="16" ry="6" fill="#f0a0c0"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><circle cx="55" cy="120" r="8" fill="#f0c040" opacity="0.5"/><circle cx="85" cy="125" r="6" fill="#f0c040" opacity="0.3"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>网红</h3>
+      <div class="en-name">Celebrity</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">鹅阵营的明星角色，自带流量光环。一旦被杀害，所有鹅队友都会收到警报提示。鸭子对网红下手需要格外谨慎。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">全屏警报（被动）</span> 被击杀后，所有存活的鹅玩家都会收到警报通知。虽然不是直接报警，但能让所有好人意识到出事了。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 肉汁 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g11" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#f5e6d0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g11)" stroke="#d4a843" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="50" rx="16" ry="5" fill="#d4a843"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><circle cx="70" cy="130" r="10" fill="#f0c040" opacity="0.6"/><text x="70" y="134" text-anchor="middle" font-size="11" fill="#8b6914">$</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>肉汁</h3>
+      <div class="en-name">Gravy</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">赚钱达人，完成任务可以累积赏金。但要注意——鸭子只能在肉汁落单时才能下手，抱团是大肉汁最强的防御策略。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">赏金累积</span> <span class="skill-tag skill-passive">抱团防护</span> 完成任务获得赏金奖励。鸭子只有在肉汁独自一人时才能击杀它，只要身边有队友就是安全的。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 工程师 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g12" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g12)" stroke="#f90" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="44" rx="18" ry="8" fill="#f80"/><ellipse cx="70" cy="42" rx="12" ry="5" fill="#fa0"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><rect x="62" y="100" width="16" height="14" rx="2" fill="#f80" stroke="#d80" stroke-width="1"/><circle cx="70" cy="107" r="3" fill="#fff"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>工程师</h3>
+      <div class="en-name">Engineer</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">技术型角色，可以钻通风管道快速移动，小地图上还能看到鸭子发动破坏的大致位置。机动性和情报能力兼备。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">钻通风管道</span> <span class="skill-tag skill-passive">破坏定位</span> 可临时使用通风管道快速转移和躲藏。小地图会显示鸭子发动破坏时的大致位置，帮助追踪鸭子的行踪。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 保镖 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g13" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e0e0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g13)" stroke="#333" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><ellipse cx="56" cy="60" rx="7" ry="6" fill="#222"/><ellipse cx="84" cy="60" rx="7" ry="6" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="50" rx="14" ry="12" fill="#222"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><rect x="66" y="96" width="8" height="24" rx="4" fill="#f80"/><circle cx="58" cy="118" r="10" fill="none" stroke="#2196F3" stroke-width="2" opacity="0.7"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>保镖</h3>
+      <div class="en-name">Bodyguard</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">忠勇的守护者，指定保护一名玩家。当被保护者即将被刀时，保镖会挺身而出代为挡刀牺牲。舍己为人的典范。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">指定保护</span> <span class="skill-tag skill-passive">挡刀牺牲</span> 可以指定一名玩家作为保护目标。如果杀手试图击杀被保护者，保镖会代替目标死亡，为团队争取宝贵时间。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 复仇者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g14" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ffe0e0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g14)" stroke="#c44" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M58 78 Q70 88 82 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="24" rx="15" ry="6" fill="#c44"/><polygon points="70,18 66,12 74,12" fill="#c44"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>复仇者</h3>
+      <div class="en-name">Avenger</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">亲眼目睹杀戮后会被激怒，短时间内获得击杀能力。复仇者是被动的猎人——鸭子在他面前刀人等于自寻死路。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">目击复仇（被动触发）</span> 当复仇者亲眼看到一个玩家被杀害时，短时间内获得击杀能力，可以当场手刃凶手为队友报仇。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 星界行者 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g15" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#d0d8f0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g15)" stroke="#7b68ee" stroke-width="2"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#7b68ee"/><circle cx="84" cy="62" r="5" fill="#7b68ee"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><circle cx="70" cy="110" r="16" fill="none" stroke="#7b68ee" stroke-width="1.5" opacity="0.4"/><circle cx="70" cy="110" r="8" fill="#7b68ee" opacity="0.2"/><polygon points="70,40 63,28 77,28" fill="#7b68ee"/><circle cx="70" cy="34" r="4" fill="#fff" opacity="0.5"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>星界行者</h3>
+      <div class="en-name">Astral</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">拥有灵魂出窍能力的神秘角色。可以释放灵魂穿墙观察其他玩家，但本体在原地无法移动，使用时需要找安全位置。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">灵魂出窍（冷却20秒）</span> 灵魂脱离身体可以在全图自由移动观察，灵魂状态下色盲且无敌。但本体原地不动很危险，需找隐蔽处使用。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 政治家 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g16" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g16)" stroke="#1a5276" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="48" rx="16" ry="6" fill="#1a5276"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><text x="70" y="114" text-anchor="middle" font-size="14" fill="#1a5276">⚖</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>政治家</h3>
+      <div class="en-name">Politician</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">老练的政治操盘手，在投票环节拥有特权——平票时政治家自动幸存，也不会被送入监狱。是投票环节最棘手的存在。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">平票幸存</span> <span class="skill-tag skill-passive">免入监狱</span> 当投票出现平局时，政治家自动幸存，不会被淘汰。此外，政治家也无法被送入监狱。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 锁匠 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g17" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e8e8e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g17)" stroke="#8d6e63" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 86 78 78" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><rect x="60" y="100" width="20" height="8" rx="2" fill="#8d6e63"/><circle cx="70" cy="130" r="8" fill="none" stroke="#8d6e63" stroke-width="2"/><rect x="66" y="126" width="8" height="4" rx="1" fill="#8d6e63"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>锁匠</h3>
+      <div class="en-name">Locksmith</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">掌握开锁技能的鹅，可以随时打开监狱门解救被误关的好人。在监狱地图中是非常重要的辅助角色。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">开启监狱门</span> 可以随时打开监狱门，不需要钥匙卡。能将被误关入监狱的鹅队友救出，在关键时刻扭转局势。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 恋人 -->
+  <div class="card goose">
+    <div class="card-img">
+      <span class="faction-tag">鹅</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="g18" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ffe0e0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#g18)" stroke="#e91e63" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><path d="M62 78 Q70 88 78 78" stroke="#e91e63" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><text x="70" y="118" text-anchor="middle" font-size="16">💕</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>恋人</h3>
+      <div class="en-name">Lover Goose</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">与另一名玩家（可能是鹅或鸭）绑定的特殊角色。两人命运相连——一方死亡，另一方也会殉情。需要在保护彼此的同时完成阵营目标。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">命运绑定</span> <span class="skill-tag skill-danger">同生共死</span> 与另一名随机玩家绑定，一方死亡则双方同时殉情。恋人之间必须互相保护，是游戏中最浪漫也最危险的设定。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== DUCK ==================== -->
+<div class="section-title section-duck" id="duck">
+  <h2>鸭阵营 DUCK</h2>
+  <p class="count">坏人阵营 · 击杀鹅队成员并破坏任务 · 共 16 个角色</p>
+</div>
+
+<div class="card-grid">
+
+  <!-- 普通鸭 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d1" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#8b6914" stroke="#6b4f10" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,28 58,22 66,34" fill="#f80"/><polygon points="70,28 82,22 74,34" fill="#f80"/><path d="M70 92 Q70 110 70 110" stroke="#6b4f10" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>普通鸭</h3>
+      <div class="en-name">The Duck</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">鸭阵营的基础角色，拥有击杀和破坏能力。虽然没有花哨的技能，但扎实的刀人和破坏操作才是鸭队获胜的基石。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">击杀</span> <span class="skill-tag skill-active">破坏设施</span> <span class="skill-tag skill-active">使用通风管</span> 标准的鸭阵营技能：刀人、钻管道、破坏地图设施。简单直接，配合发言迷惑鹅队。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 专业杀手 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d2" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#2c2c2c" stroke="#111" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#1a3a10"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,28 58,22 66,34" fill="#f80"/><polygon points="70,28 82,22 74,34" fill="#f80"/><ellipse cx="70" cy="48" rx="16" ry="5" fill="#111"/><ellipse cx="70" cy="44" rx="10" ry="3" fill="#222"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#444"/><text x="70" y="114" text-anchor="middle" font-size="11" fill="#c44">🔪</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>专业杀手</h3>
+      <div class="en-name">Professional</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">鸭阵营的王牌杀手。被专业杀手击杀的尸体不会自动报警，加拿大鹅的被动技能对其无效。擅长隐藏击杀，是鸭子中最令人胆寒的存在。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">隐刀</span> <span class="skill-tag skill-danger">无视加拿大鹅</span> 击杀后尸体不会自动触发报警，鹅需要靠近尸体才能发现。免疫加拿大鹅的自动报警被动，克制一切自动报告机制。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 刺客 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d3" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#6b1010" stroke="#4a0808" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#ff0"/><ellipse cx="84" cy="52" r="5" fill="#ff0"/><circle cx="57" cy="50" r="2" fill="#c44"/><circle cx="85" cy="50" r="2" fill="#c44"/><path d="M58 68 Q70 78 82 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><rect x="30" y="105" width="6" height="20" rx="2" fill="#888" transform="rotate(-30,33,115)"/><rect x="104" y="105" width="6" height="20" rx="2" fill="#888" transform="rotate(30,106,115)"/><circle cx="70" cy="120" r="10" fill="none" stroke="#f0c040" stroke-width="1" opacity="0.5"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>刺客</h3>
+      <div class="en-name">Assassin</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">唯一可以在会议期间杀人的角色！刺客可以在会议中猜测某人的角色身份，猜对则目标当场出局——猜错则自己暴毙。高风险高回报，每局最多使用两次。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">会议刺杀（2次/局）</span> <span class="skill-tag skill-danger">猜错自爆</span> 会议讨论期间使用，猜测一名玩家的具体角色。猜中→目标立即死亡；猜错→刺客自己死亡。是全游戏最刺激的技能。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 连环杀手 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d4" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#4a0808" stroke="#2a0000" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="56" cy="50" r="2" fill="#f00"/><circle cx="84" cy="50" r="2" fill="#f00"/><path d="M62 68 Q70 78 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><circle cx="40" cy="118" r="4" fill="#c44"/><circle cx="55" cy="122" r="4" fill="#c44"/><circle cx="70" cy="125" r="4" fill="#c44"/><circle cx="85" cy="122" r="4" fill="#c44"/><circle cx="100" cy="118" r="4" fill="#c44"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>连环杀手</h3>
+      <div class="en-name">Serial Killer</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">杀戮成瘾的疯狂角色。击杀冷却时间极短，可以在短时间内连续刀人滚雪球。但每杀一人冷却会略微增加，需要把握节奏。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">速刀连杀</span> 击杀冷却时间极短，可以快速连续刀掉多人。但每次击杀后冷却时间略微增加。适合找准时机一波带走多人后进入会议洗白。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 爆炸王 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d5" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#5c3a0a" stroke="#3a2400" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,28 58,22 66,34" fill="#f80"/><polygon points="70,28 82,22 74,34" fill="#f80"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><circle cx="70" cy="115" r="14" fill="#333"/><circle cx="70" cy="115" r="6" fill="#f80"/><line x1="70" y1="109" x2="70" y2="95" stroke="#666" stroke-width="2"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>爆炸王</h3>
+      <div class="en-name">Demolitionist</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">炸弹狂人，可以在玩家身上安放炸弹。炸弹可以像烫手山芋一样在玩家之间传递，15秒后引爆。配合假任务使用效果更佳。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">安放炸弹</span> <span class="skill-tag skill-danger">15秒引爆</span> 在目标身上放置炸弹，炸弹可在玩家间传递。15秒后爆炸，持有炸弹的玩家被淘汰。也可以放置假任务引鹅上钩。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 身份窃贼 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d6" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#4a2060" stroke="#2a1040" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><rect x="58" y="28" width="24" height="16" rx="3" fill="#7b68ee"/><text x="70" y="114" text-anchor="middle" font-size="10" fill="#7b68ee">🔄</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>身份窃贼</h3>
+      <div class="en-name">Identity Thief</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">变形大师，可以在击杀后变形成死者的样子，直到下一次会议召开。完美伪装身份混入鹅群，在会议前的自由阶段极难被识破。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">窃取身份（变形）</span> 击杀目标后自动变身成死者的外观，伪装直到下次会议。利用死者的身份在鹅群中活动，混淆视听。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 间谍 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d7" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#1a3a5c" stroke="#0a1a2c" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="56" cy="50" rx="8" ry="10" fill="#111" opacity="0.6"/><ellipse cx="84" cy="50" rx="8" ry="10" fill="#111" opacity="0.6"/><text x="70" y="120" text-anchor="middle" font-size="10" fill="#4a90d9">🔍</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>间谍</h3>
+      <div class="en-name">Spy</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">情报型鸭子。当间谍在会议中是唯一投票给某名玩家的鸭时，会后可以查看该玩家的具体角色。信息收集能力极强。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">独家情报</span> 如果在投票环节间谍是唯一投票给某人的玩家，会后可以查看该目标的具体职业身份。适合在会议后获取关键情报。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 派对鸭 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d8" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#e04090" stroke="#c03070" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 80 78 68" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,28 58,22 66,34" fill="#f80"/><polygon points="70,28 82,22 74,34" fill="#f80"/><ellipse cx="70" cy="44" rx="14" ry="6" fill="#ff69b4"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><circle cx="50" cy="115" r="5" fill="#ff0" opacity="0.6"/><circle cx="90" cy="115" r="5" fill="#0ff" opacity="0.6"/><circle cx="70" cy="108" r="5" fill="#f0f" opacity="0.6"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>派对鸭</h3>
+      <div class="en-name">Party Duck</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">嗨翻全场的氛围担当！派对鸭可以让所有玩家的语音在会议中变得尖细滑稽，严重干扰鹅队的正常沟通和逻辑讨论。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">语音变声</span> 在会议中使用，让所有玩家的语音变得高音滑稽（类似氦气变声效果），扰乱会议沟通。纯娱乐+干扰型技能。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 静语者 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d9" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#2a2a3a" stroke="#1a1a2a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><rect x="58" y="96" width="24" height="8" rx="2" fill="#c44"/><line x1="70" y1="96" x2="70" y2="104" stroke="#fff" stroke-width="2"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>静语者</h3>
+      <div class="en-name">Silencer</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">沉默的施法者。会议中可以选择一名玩家禁言，使其无法发言、无法传递关键信息。在关键投票回合禁言目击者，战术价值极高。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">禁言（会议中）</span> 会议期间选择一名玩家，使其无法说话。被禁言的玩家只能通过打字或沉默，无法口头提供证据或自辩。无法使用通风管。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 隐形鸭 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d10" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#8b6914" stroke="#6b4f10" stroke-width="1" opacity="0.4"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e" opacity="0.4"/><ellipse cx="56" cy="52" r="5" fill="#fff" opacity="0.4"/><ellipse cx="84" cy="52" r="5" fill="#fff" opacity="0.4"/><circle cx="57" cy="50" r="2.5" fill="#111" opacity="0.4"/><circle cx="85" cy="50" r="2.5" fill="#111" opacity="0.4"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none" opacity="0.4"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80" opacity="0.3"/><text x="70" y="114" text-anchor="middle" font-size="11" fill="#aaa">👤</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>隐形鸭</h3>
+      <div class="en-name">Invisibility Duck</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">可以短暂进入隐身状态的鸭子。隐身期间可以完成击杀而不被发现，但代价是隐身时自己也看不见其他玩家。需要提前确认目标位置。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">短暂隐身</span> 进入隐身状态一段时间，期间其他玩家看不到你。但隐身状态下你也看不到其他玩家，需要提前确定目标位置再隐身靠近刀人。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 变形者 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d11" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#3a6a4a" stroke="#2a5a3a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><polygon points="70,28 58,22 66,34" fill="#f80"/><polygon points="70,28 82,22 74,34" fill="#f80"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="50" cy="50" rx="10" ry="8" fill="#fff" opacity="0.4"/><ellipse cx="90" cy="50" rx="10" ry="8" fill="#2d5a1e" opacity="0.4"/><text x="70" y="120" text-anchor="middle" font-size="9" fill="#fff" opacity="0.6">MORPH</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>变形者</h3>
+      <div class="en-name">Morphling</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">可以临时变身成任意玩家的鸭子。冷却时间较短，利用变形骗取鹅的信任后再刀人，是迷惑性最强的鸭角色之一。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">变形（冷却短）</span> 暂时变身为任意一名其他玩家的外观。冷却时间短，可频繁使用。先变成鹅队友获取信任，接近目标后现原形刀人。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 食鸟鸭 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d12" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#4a2a0a" stroke="#3a1a00" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#ff0"/><ellipse cx="84" cy="52" r="5" fill="#ff0"/><circle cx="57" cy="50" r="1.5" fill="#c44"/><circle cx="85" cy="50" r="1.5" fill="#c44"/><path d="M56 64 Q70 84 84 64" stroke="#f90" stroke-width="4" fill="#c44"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><text x="70" y="114" text-anchor="middle" font-size="13">🍖</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>食鸟鸭</h3>
+      <div class="en-name">Cannibal</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">毁尸灭迹专家。每局游戏可以吃掉一具尸体，永久隐藏它，使其无法被报告。在关键位置吃掉重要尸体可以完全打乱鹅队的节奏。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">吞噬尸体（1次/局）</span> 可以吃掉一具尸体，尸体被永久移除无法报告。一次性的强力技能，需要在最关键的时机使用，如吃掉加拿大鹅的尸体。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 忍者 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d13" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#1a1a2e" stroke="#0a0a1e" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="4" fill="#fff"/><ellipse cx="84" cy="52" r="4" fill="#fff"/><circle cx="57" cy="50" r="2" fill="#111"/><circle cx="85" cy="50" r="2" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><rect x="54" y="28" width="32" height="4" rx="2" fill="#111"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#444"/><line x1="30" y1="110" x2="40" y2="140" stroke="#888" stroke-width="3" stroke-linecap="round"/><line x1="110" y1="110" x2="100" y2="140" stroke="#888" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>忍者</h3>
+      <div class="en-name">Ninja</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">暗影中的双刀刺客。忍者可以同时击杀范围内的两名玩家，但冷却时间是正常的三倍。适合在鹅群聚堆时一波双杀打出爆炸效果。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">双杀（范围）</span> <span class="skill-tag skill-danger">三倍冷却</span> 可以同时击杀攻击范围内的两名玩家。威力巨大但冷却时间极长（正常的3倍），需要在最佳时机使用。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 丧葬者 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d14" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#3a3a3a" stroke="#2a2a2a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="70" cy="44" rx="14" ry="6" fill="#444"/><text x="70" y="114" text-anchor="middle" font-size="12">🪦</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>丧葬者</h3>
+      <div class="en-name">Undertaker</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">尸体搬运工。可以拖动尸体移动到隐蔽位置，虽然拖动速度较慢，但能有效将尸体从容易被发现的地点转移到角落。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">拖动尸体</span> 可以拖动尸体，以较慢的速度移动到其他位置。将尸体从显眼处搬到隐蔽角落，减少被鹅队发现的几率。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 雇佣杀手 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d15" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#5a3a1a" stroke="#3a2a0a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="70" cy="44" rx="16" ry="6" fill="#8b6914"/><circle cx="70" cy="110" r="10" fill="none" stroke="#f0c040" stroke-width="1.5"/><text x="70" y="114" text-anchor="middle" font-size="9" fill="#f0c040">TARGET</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>雇佣杀手</h3>
+      <div class="en-name">Hitman</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">拿钱办事的职业杀手，游戏开始时被分配一个特定的击杀目标。完成契约击杀目标可以获得额外奖励，是目标导向型的鸭角色。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">契约击杀</span> 开局获得一个专属击杀目标（标记为红色的鹅）。击杀契约目标可以获得额外奖励。需要优先寻找并消灭自己的目标。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 告密者 -->
+  <div class="card duck">
+    <div class="card-img">
+      <span class="faction-tag">鸭</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="d16" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a8a3c"/><stop offset="100%" stop-color="#3d6b2e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="#2a1a3a" stroke="#1a0a2a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#2d5a1e"/><ellipse cx="56" cy="52" r="5" fill="#fff"/><ellipse cx="84" cy="52" r="5" fill="#fff"/><circle cx="57" cy="50" r="2.5" fill="#111"/><circle cx="85" cy="50" r="2.5" fill="#111"/><path d="M62 68 Q70 76 78 68" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="56" cy="50" rx="8" ry="10" fill="#111" opacity="0.6"/><ellipse cx="84" cy="50" rx="8" ry="10" fill="#111" opacity="0.6"/><text x="70" y="114" text-anchor="middle" font-size="10" fill="#c0c">📋</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>告密者</h3>
+      <div class="en-name">Snitch</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">监狱使者。告密者在会议中如果独自投票给某玩家，该玩家会被直接送入监狱。情报型+控制型鸭角色。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">告密送监</span> 如果告密者是唯一投票给某名玩家的鸭，该目标会被送入监狱。可以有效排除关键目标而不需要刀人。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ==================== NEUTRAL ==================== -->
+<div class="section-title section-neutral" id="neutral">
+  <h2>中立阵营 NEUTRAL</h2>
+  <p class="count">独立阵营 · 每个中立角色有独特的获胜条件 · 共 9 个角色</p>
+</div>
+
+<div class="card-grid">
+
+  <!-- 呆呆鸟 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n1" cx="50%" cy="40%"><stop offset="0%" stop-color="#ffe0b0"/><stop offset="100%" stop-color="#f5c080"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n1)" stroke="#d4a040" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="36" ry="36" fill="#ffe0b0"/><circle cx="55" cy="58" r="6" fill="#fff"/><circle cx="85" cy="58" r="6" fill="#fff"/><circle cx="56" cy="57" r="3" fill="#222"/><circle cx="86" cy="57" r="3" fill="#222"/><circle cx="53" cy="54" r="1.5" fill="#fff"/><circle cx="83" cy="54" r="1.5" fill="#fff"/><path d="M62 76 Q70 88 78 76" stroke="#f90" stroke-width="3" fill="none"/><ellipse cx="70" cy="50" rx="8" ry="12" fill="#f80" transform="rotate(10,70,50)"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/><text x="70" y="128" text-anchor="middle" font-size="10" fill="#f80">🤪</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>呆呆鸟</h3>
+      <div class="en-name">Dodo Bird</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">游戏中最欢乐的角色！呆呆鸟的获胜条件是被投票出局。需要故意表现得可疑、混乱发言、假装鸭子——让其他玩家认为你是鸭并投票送你出局你就赢了。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">无技能</span> 目标就是被投票淘汰。需要放飞自我、装疯卖傻、故意表现可疑。太像呆呆鸟容易被无视，太狡猾又可能被刀——分寸感是关键。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>被投票淘汰出局即获胜。被刀或被炸不算。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 鸽子 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n2" cx="50%" cy="40%"><stop offset="0%" stop-color="#e0e0e0"/><stop offset="100%" stop-color="#b0b0b0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n2)" stroke="#999" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="36" ry="36" fill="#ddd"/><circle cx="54" cy="60" r="5" fill="#f60"/><circle cx="86" cy="60" r="5" fill="#f60"/><circle cx="55" cy="59" r="2" fill="#111"/><circle cx="87" cy="59" r="2" fill="#111"/><path d="M64 76 Q70 82 76 76" stroke="#f80" stroke-width="2" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f60"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f60"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f60"/><circle cx="45" cy="120" r="6" fill="#6f0" opacity="0.5"/><circle cx="95" cy="120" r="6" fill="#6f0" opacity="0.5"/><circle cx="70" cy="112" r="6" fill="#6f0" opacity="0.5"/><text x="70" y="128" text-anchor="middle" font-size="9" fill="#6f0">🦠</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>鸽子</h3>
+      <div class="en-name">Pigeon</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">传播病毒的感染者。鸽子需要在同一回合内感染所有存活的玩家才能获胜。需要在全场玩家间巡回接触，一旦有人被刀或死亡则需重新计算。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">感染传播</span> 靠近其他玩家即可感染他们。必须在一回合内感染所有存活玩家才能胜利。如果有人死亡，已感染的进度不会保留。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>在同一回合内感染所有存活玩家即获胜。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 鹈鹕 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n3" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#e0e0e8"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n3)" stroke="#ff9800" stroke-width="2"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><circle cx="56" cy="62" r="5" fill="#222"/><circle cx="84" cy="62" r="5" fill="#222"/><ellipse cx="68" cy="84" rx="20" ry="10" fill="#ff9800"/><ellipse cx="70" cy="80" rx="14" ry="6" fill="#f80"/><path d="M50 80 Q42 64 50 54" stroke="#ff9800" stroke-width="5" fill="#ff9800"/><path d="M90 80 Q98 64 90 54" stroke="#ff9800" stroke-width="5" fill="#ff9800"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><text x="70" y="120" text-anchor="middle" font-size="12">🐟</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>鹈鹕</h3>
+      <div class="en-name">Pelican</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">大嘴吞天下！鹈鹕可以将其他玩家吞入肚中，被吞的玩家不会立即死亡——只有在会议召开时才会消化。如果鹈鹕在吞人后到会议前被刀，肚子里的玩家会被释放。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">吞噬</span> 可以吞掉任意玩家（包括鹅和鸭）。被吞玩家在会议前不算死亡，如果鹈鹕在会议前被刀，被吞者获救。会议时消化所有腹中玩家。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>存活到最后（吞掉所有其他玩家或最终存活）。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 秃鹫 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n4" cx="50%" cy="40%"><stop offset="0%" stop-color="#5a3a6a"/><stop offset="100%" stop-color="#3a2a4a"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n4)" stroke="#2a1a3a" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#4a2a5a"/><circle cx="56" cy="52" r="5" fill="#ff0"/><circle cx="84" cy="52" r="5" fill="#ff0"/><circle cx="56" cy="50" r="2" fill="#c44"/><circle cx="84" cy="50" r="2" fill="#c44"/><polygon points="70,28 56,20 64,34" fill="#666"/><polygon points="70,28 84,20 76,34" fill="#666"/><path d="M56 66 Q70 82 84 66" stroke="#c44" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#666"/><text x="70" y="114" text-anchor="middle" font-size="13">🦴</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>秃鹫</h3>
+      <div class="en-name">Vulture</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">食腐者，以尸体为食。秃鹫需要吃掉足够数量的尸体来获胜（数量随房间人数而定）。蓝色箭头会指引尸体方向，跟着箭头找尸体即可。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">吞噬尸体</span> <span class="skill-tag skill-passive">尸体指引</span> 可以吃掉地图上的尸体，蓝色箭头会指向尸体位置。吃够指定数量即获胜。不需要参与鹅鸭之争，只管找尸体。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>吃掉足够数量的尸体即可获胜（数量根据房间人数而定）。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 猎鹰 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n5" cx="50%" cy="40%"><stop offset="0%" stop-color="#8b4513"/><stop offset="100%" stop-color="#5a2a0a"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n5)" stroke="#3a1a00" stroke-width="1"/><ellipse cx="70" cy="65" rx="34" ry="30" fill="#7a3a10"/><circle cx="55" cy="56" r="5" fill="#ff0"/><circle cx="85" cy="56" r="5" fill="#ff0"/><circle cx="55" cy="54" r="2" fill="#111"/><circle cx="85" cy="54" r="2" fill="#111"/><polygon points="70,30 54,16 62,32" fill="#333"/><polygon points="70,30 86,16 78,32" fill="#333"/><path d="M58 72 Q70 82 82 72" stroke="#f80" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><line x1="70" y1="95" x2="52" y2="125" stroke="#f80" stroke-width="3" stroke-linecap="round"/><line x1="70" y1="95" x2="88" y2="125" stroke="#f80" stroke-width="3" stroke-linecap="round"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>猎鹰</h3>
+      <div class="en-name">Falcon</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">孤独的猎手。猎鹰带刀但无法投票，需要活到最后成为唯一幸存者。鹅队只能靠任务获胜、鸭队只能靠破坏获胜——猎鹰的存在改变了所有人的游戏规则。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">击杀</span> <span class="skill-tag skill-passive">无法投票</span> 拥有击杀能力但不能参与投票。当猎鹰存活时，鹅队只能通过完成任务获胜，鸭队只能通过破坏获胜。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>活到最后成为唯一幸存者。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 小丑 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n6" cx="50%" cy="40%"><stop offset="0%" stop-color="#fff"/><stop offset="100%" stop-color="#ffe0e0"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n6)" stroke="#ff4081" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#fff"/><ellipse cx="56" cy="60" rx="9" ry="10" fill="#fff" stroke="#ff4081" stroke-width="1.5"/><ellipse cx="84" cy="60" rx="9" ry="10" fill="#fff" stroke="#ff4081" stroke-width="1.5"/><circle cx="56" cy="60" r="3.5" fill="#ff4081"/><circle cx="84" cy="60" r="3.5" fill="#ff4081"/><path d="M60 78 Q70 90 80 78" stroke="#ff4081" stroke-width="3" fill="none"/><ellipse cx="70" cy="48" rx="10" ry="5" fill="#ff4081"/><ellipse cx="70" cy="49" rx="6" ry="3" fill="#fff"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#f80"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#f80"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#f80"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>小丑</h3>
+      <div class="en-name">Jester / Dodo</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">搅局者！小丑和呆呆鸟类似，被投票出局即可获胜。不同的是小丑可以更激进地制造混乱，在会议中引导风向让自己成为投票目标。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">无技能</span> 纯靠演技和发言引导投票。需要精准把握"可疑但不过分"的度——太明显会被识破，太隐蔽又吃不到票。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>被投票淘汰出局即获胜。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 乌鸦 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n7" cx="50%" cy="40%"><stop offset="0%" stop-color="#1a1a2e"/><stop offset="100%" stop-color="#0a0a1e"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n7)" stroke="#000" stroke-width="1"/><ellipse cx="70" cy="60" rx="36" ry="32" fill="#1a1a2e"/><circle cx="56" cy="52" r="5" fill="#fff"/><circle cx="84" cy="52" r="5" fill="#fff"/><circle cx="56" cy="50" r="2" fill="#c44"/><circle cx="84" cy="50" r="2" fill="#c44"/><polygon points="70,28 55,20 65,34" fill="#111"/><polygon points="70,28 85,20 75,34" fill="#111"/><path d="M58 68 Q70 78 82 68" stroke="#999" stroke-width="3" fill="none"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#444"/><text x="70" y="114" text-anchor="middle" font-size="10" fill="#c0c">🖤</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>乌鸦</h3>
+      <div class="en-name">Raven</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">诅咒使者。乌鸦可以给玩家贴上诅咒标记，如果被诅咒的玩家在会议中被投票出局，乌鸦直接获胜。需要精准选择目标并引导投票风向。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">贴诅咒</span> 给一名玩家贴上诅咒。如果被诅咒者在会议中被投票淘汰，乌鸦立即获胜。需要蛊惑其他玩家投票给被诅咒的目标。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>被诅咒的目标在会议中被投票淘汰。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 木乃伊 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n8" cx="50%" cy="40%"><stop offset="0%" stop-color="#d4c4a0"/><stop offset="100%" stop-color="#a09070"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n8)" stroke="#8b7355" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#d4c4a0"/><circle cx="55" cy="60" r="5" fill="#8b0000"/><circle cx="85" cy="60" r="5" fill="#8b0000"/><path d="M62 78 Q70 86 78 78" stroke="#8b7355" stroke-width="2" fill="none"/><rect x="50" y="28" width="40" height="30" rx="4" fill="#c4b49a"/><rect x="55" y="22" width="30" height="12" rx="3" fill="#b4a48a"/><line x1="55" y1="28" x2="85" y2="28" stroke="#8b7355" stroke-width="1"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#c4b49a"/><ellipse cx="55" cy="148" rx="12" ry="5" fill="#c4b49a"/><ellipse cx="85" cy="148" rx="12" ry="5" fill="#c4b49a"/></svg>
+    </div>
+    <div class="card-body">
+      <h3>木乃伊</h3>
+      <div class="en-name">Mummy</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">诅咒传染者。木乃伊身上带有诅咒，如果有人刀了木乃伊，杀手会变成新的木乃伊，诅咒随之传播。以传染诅咒的方式扰乱全场的秩序。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-passive">诅咒传染（被动）</span> 被击杀时，击杀者会变成新的木乃伊。诅咒在玩家之间传播，让所有人都惧怕刀木乃伊。通过诅咒传染控场。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>通过传染诅咒实现独立的胜利目标。</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 恶魔 -->
+  <div class="card neutral">
+    <div class="card-img">
+      <span class="faction-tag">中立</span>
+      <svg viewBox="0 0 140 160"><defs><radialGradient id="n9" cx="50%" cy="40%"><stop offset="0%" stop-color="#c44"/><stop offset="100%" stop-color="#800"/></radialGradient></defs><ellipse cx="70" cy="90" rx="45" ry="50" fill="url(#n9)" stroke="#400" stroke-width="1.5"/><ellipse cx="70" cy="70" rx="38" ry="38" fill="#c44"/><circle cx="56" cy="60" r="5" fill="#ff0"/><circle cx="84" cy="60" r="5" fill="#ff0"/><circle cx="56" cy="59" r="1.5" fill="#c44"/><circle cx="84" cy="59" r="1.5" fill="#c44"/><path d="M58 78 Q70 90 82 78" stroke="#ff0" stroke-width="3" fill="none"/><polygon points="56,46 52,30 62,42" fill="#800"/><polygon points="84,46 88,30 78,42" fill="#800"/><ellipse cx="70" cy="145" rx="18" ry="8" fill="#400"/><text x="70" y="118" text-anchor="middle" font-size="14">😈</text></svg>
+    </div>
+    <div class="card-body">
+      <h3>恶魔</h3>
+      <div class="en-name">Demon</div>
+      <div class="info-block">
+        <div class="label">人物介绍</div>
+        <div class="content">来自地狱的独立杀手。恶魔每局游戏可以刀一人，目标是存活到最后或淘汰特定目标。拥有独立的击杀能力和独立的胜利条件。</div>
+      </div>
+      <div class="info-block">
+        <div class="label">技能介绍</div>
+        <div class="content"><span class="skill-tag skill-active">恶魔之刃（1次/局）</span> 全局仅可刀杀一名玩家。需要谨慎选择目标，结合局势在最关键的时刻出手。适合在游戏后期使用。</div>
+      </div>
+      <div class="win-condition">
+        <div class="label">获胜条件</div>
+        <div>存活到最后或淘汰特定目标即可获胜。</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- ====== FOOTER ====== -->
+<footer class="footer">
+  <p>鹅鸭杀 (Goose Goose Duck) 全角色图鉴 · 数据整理自官方及社区资料</p>
+  <p>Gaggle Studios, Inc. 开发 · 各角色图片为示意插图</p>
+  <p style="margin-top:8px;font-size:0.75rem;">本页面仅供玩家参考使用，角色数据可能随游戏版本更新而变化</p>
+</footer>
+
+<a href="#" class="back-top" title="回到顶部">&#9650;</a>
+
+</body>
+</html>
